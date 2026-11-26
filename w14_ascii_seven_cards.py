@@ -144,8 +144,18 @@ def human_turn(hand, board):
     show_hand(hand, board)
 
     while True:
-        command = input("出す札（例 S6 / H10 / DA）、P=パス、Q=終了 > ")
+        command = input("出す札（例 S6 / H10 / DA）、H=ヒント、P=パス、Q=終了 > ")
         command = command.strip().upper()
+
+        if command == "H":
+            choices = [card_name(card) for card in hand
+                       if can_play(card, board)]
+            if choices:
+                print("出せるカード：" + ", ".join(choices))
+                print(f"出せるカードの枚数：{len(choices)}枚")
+            else:
+                print("出せるカードがありません。")
+            continue
 
         if command == "Q":
             return False
