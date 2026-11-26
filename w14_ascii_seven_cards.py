@@ -6,7 +6,8 @@
 """
 
 import random
-
+MAX_PASSES = 3
+pass_count = 0
 
 SUITS = ["S", "H", "D", "C"]
 
@@ -140,6 +141,7 @@ def read_card(text):
 
 def human_turn(hand, board):
     """人間の番。札を置くか、パスする。Qならゲーム終了。"""
+    global pass_count
     show_board(board)
     show_hand(hand, board)
 
@@ -160,8 +162,16 @@ def human_turn(hand, board):
         if command == "Q":
             return False
         if command == "P" or command == "PASS":
+            pass_count += 1
+
+            if pass_count > MAX_PASSES:
+                print("パス回数の上限を超えました。あなたの負けです。")
+                return False
+
             print("あなたはパスしました。")
+            print(f"残りパス回数：{MAX_PASSES - pass_count}回")
             return True
+            
 
         card = read_card(command)
         if card is None:
@@ -195,7 +205,7 @@ def main():
     print("ASCII 七並べ － あなた VS CPU 3人")
     print("各マークの7から左右へ、数字を順番につなげます。")
     print("出せるカードがないときは P でパスできます。")
-    print("今回は初心者向けルール：パス回数に制限なし。最初に手札0枚で勝利！")
+    print("パスは3回まで。4回目のパスで負けになります。最初に手札0枚で勝利！")
 
     deck = create_deck()
     hands = deal_cards(deck)
