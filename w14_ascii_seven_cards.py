@@ -235,4 +235,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    while True:
+        pass_count = 0
+        main()
+
+        again = input("もう一度遊びますか？ (Y/N) > ").strip().upper()
+
+        if again != "Y":
+            print("遊んでくれてありがとうございました！")
+            break
